@@ -1,152 +1,95 @@
-class AccountApi:
-    def __init__(self):
-        ...
+import requests
+from ..models.registration_model import registration_model
+from ..models.reset_password_model import reset_password_model
+from ..models.change_email_model import change_email_model
+from ..models.change_password_model import change_password_model
+from requests import Response, session
 
-    def post_v1_account(self):
+
+
+class AccountApi:
+    def __init__(self, host, headers=None):
+        self.host = host
+        self.session = session()
+        self.session.headers = headers
+
+    def post_v1_account(self, json: registration_model, **kwargs) -> Response:
         """
         Register new user
+        :param json registration_model
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account"
 
-        payload = {
-            "login": "naruto_2",
-            "email": "naruto_2@mail.ru",
-            "password": "naruto_2_11"
-        }
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Content-Type': 'application/json',
-            'Accept': 'text/plain'
-        }
-
-        response = requests.request(
-            "POST",
-            url,
-            headers=headers,
-            json=payload
+        response = self.session.post(
+            url=f"{self.host}/v1/account",
+            json=json,
+            **kwargs
         )
         return response
 
-    def post_v1_account_password(self):
+    def post_v1_account_password(self, json: reset_password_model) -> Response:
         """
         Reset registered user password
+        :param json reset_password_model
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account/password"
-
-        payload = {
-            "login": "et aliquip esse",
-            "email": "culpa Excepteur"
-        }
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Content-Type': 'application/json',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             "POST",
-            url,
-            headers=headers,
-            json=payload
+            url=f"{self.host}/v1/account/password",
+            json=json
         )
         return response
 
-    def put_v1_account_email(self):
+    def put_v1_account_email(self, json: change_email_model) -> Response:
         """
         Change registered user email
+        :param json change_email_model
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account/email"
-
-        payload = {
-            "login": "eu dolor veniam labore",
-            "password": "ut consequat dolore dolore",
-            "email": "fugiat consequat aute"
-        }
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Content-Type': 'application/json',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             "PUT",
-            url,
-            headers=headers,
-            json=payload
+            url=f"{self.host}/v1/account/email",
+            json=json
         )
         return response
 
-    def put_v1_account_password(self):
+    def put_v1_account_password(self, json: change_password_model) -> Response:
         """
         Change registered user password
+        :param json change_password_model
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account/password"
-
-        payload = {
-            "login": "eiusmo",
-            "token": "urn:uuid:b822a57b-067b-9f63-59ad-0663a5e0486e",
-            "oldPassword": "est consectetur",
-            "newPassword": "officia aliquip id ut"
-        }
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Content-Type': 'application/json',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             "PUT",
-            url,
-            headers=headers,
-            json=payload
+            url=f"{self.host}/v1/account/password",
+            json=json
         )
         return response
 
-    def put_v1_account_token(self):
+    def put_v1_account_token(self, token: str) -> Response:
         """
         Activate registered user
+        :param token
         :return:
         """
-        token = '123456789'
-        url = f"http://5.63.153.31:5051/v1/account/{token}"
-
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             "PUT",
-            url,
-            headers=headers
+            url=f"{self.host}/v1/account/{token}",
         )
         return response
 
-    def get_v1_account(self):
+    def get_v1_account(self) -> Response:
         """
         Get current user
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account"
-
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             "GET",
-            url,
-            headers=headers
+            url=f"{self.host}/v1/account",
         )
         return response

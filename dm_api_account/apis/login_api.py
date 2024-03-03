@@ -1,31 +1,24 @@
+import requests
+from ..models.login_credentials_model import login_credentials_model
+from requests import Response
+
+
 class LoginApi:
 
-    def __init__(self):
-        ...
+    def __init__(self, host):
+        self.host = host
 
-    def post_v1_account_login(self):
+    def post_v1_account_login(self, json: login_credentials_model) -> Response:
         """
         Authenticate via credentials
+        :param json login_credentials_model
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account/login"
-
-        payload = {
-            "login": "culpa labor",
-            "password": "mollit tempor",
-            "rememberMe": True
-        }
-        headers = {
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Content-Type': 'application/json',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             "POST",
-            url,
-            headers=headers,
-            json=payload
+            url=f"{self.host}/v1/account/login",
+            json=json
         )
         return response
 
@@ -34,18 +27,10 @@ class LoginApi:
         Logout as current user
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account/login"
-
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             method="DELETE",
-            url=url,
-            headers=headers
+            url=f"{self.host}/v1/account/login",
         )
         return response
 
@@ -54,17 +39,9 @@ class LoginApi:
         Logout from every device
         :return:
         """
-        url = "http://5.63.153.31:5051/v1/account/login/all"
-
-        headers = {
-            'X-Dm-Auth-Token': 'aliquip labore in ipsum',
-            'X-Dm-Bb-Render-Mode': 'aliquip labore in ipsum',
-            'Accept': 'text/plain'
-        }
 
         response = requests.request(
             "DELETE",
-            url,
-            headers=headers
+            url=f"{self.host}/v1/account/login/all",
         )
         return response
