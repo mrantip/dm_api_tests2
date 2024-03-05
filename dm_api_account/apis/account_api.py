@@ -11,7 +11,8 @@ class AccountApi:
     def __init__(self, host, headers=None):
         self.host = host
         self.session = session()
-        self.session.headers = headers
+        if headers:
+            self.session.headers.update(headers)
 
     def post_v1_account(self, json: registration_model, **kwargs) -> Response:
         """
@@ -34,8 +35,7 @@ class AccountApi:
         :return:
         """
 
-        response = requests.request(
-            "POST",
+        response = self.session.post(
             url=f"{self.host}/v1/account/password",
             json=json
         )
@@ -62,8 +62,7 @@ class AccountApi:
         :return:
         """
 
-        response = requests.request(
-            "PUT",
+        response = self.session.put(
             url=f"{self.host}/v1/account/password",
             json=json
         )
@@ -76,8 +75,7 @@ class AccountApi:
         :return:
         """
 
-        response = requests.request(
-            "PUT",
+        response = self.session.put(
             url=f"{self.host}/v1/account/{token}",
         )
         return response
@@ -88,8 +86,7 @@ class AccountApi:
         :return:
         """
 
-        response = requests.request(
-            "GET",
+        response = self.session.get(
             url=f"{self.host}/v1/account",
         )
         return response

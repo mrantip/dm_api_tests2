@@ -1,12 +1,15 @@
 import requests
 from ..models.login_credentials_model import login_credentials_model
-from requests import Response
+from requests import Response, session
 
 
 class LoginApi:
 
-    def __init__(self, host):
+    def __init__(self, host, headers=None):
         self.host = host
+        self.session = session()
+        if headers:
+            self.session.headers.update(headers)
 
     def post_v1_account_login(self, json: login_credentials_model) -> Response:
         """
@@ -15,8 +18,7 @@ class LoginApi:
         :return:
         """
 
-        response = requests.request(
-            "POST",
+        response = self.session.post(
             url=f"{self.host}/v1/account/login",
             json=json
         )
@@ -28,8 +30,7 @@ class LoginApi:
         :return:
         """
 
-        response = requests.request(
-            method="DELETE",
+        response = self.session.delete(
             url=f"{self.host}/v1/account/login",
         )
         return response
@@ -40,8 +41,7 @@ class LoginApi:
         :return:
         """
 
-        response = requests.request(
-            "DELETE",
+        response = self.session.delete(
             url=f"{self.host}/v1/account/login/all",
         )
         return response
