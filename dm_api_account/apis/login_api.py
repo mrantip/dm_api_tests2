@@ -1,26 +1,26 @@
-import requests
-from ..models.login_credentials_model import login_credentials_model
+from ..models.login_credentials_model import LoginCredentialsModel
 from requests import Response, session
+from restclient.restclient import RestClient
 
 
 class LoginApi:
 
     def __init__(self, host, headers=None):
         self.host = host
-        self.session = session()
+        self.client = RestClient(host=host, headers=headers)
         if headers:
-            self.session.headers.update(headers)
+            self.client.session.headers.update(headers)
 
-    def post_v1_account_login(self, json: login_credentials_model) -> Response:
+    def post_v1_account_login(self, json: LoginCredentialsModel) -> Response:
         """
         Authenticate via credentials
         :param json login_credentials_model
         :return:
         """
 
-        response = self.session.post(
-            url=f"{self.host}/v1/account/login",
-            json=json
+        response = self.client.post(
+            path=f"/v1/account/login",
+            json=json.model_dump(by_alias=True, exclude_none=True)
         )
         return response
 
@@ -30,8 +30,8 @@ class LoginApi:
         :return:
         """
 
-        response = self.session.delete(
-            url=f"{self.host}/v1/account/login",
+        response = self.client.delete(
+            path=f"/v1/account/login",
         )
         return response
 
@@ -41,7 +41,7 @@ class LoginApi:
         :return:
         """
 
-        response = self.session.delete(
-            url=f"{self.host}/v1/account/login/all",
+        response = self.client.delete(
+            path=f"/v1/account/login/all",
         )
         return response

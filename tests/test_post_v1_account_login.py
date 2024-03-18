@@ -1,3 +1,5 @@
+from dm_api_account.models.login_credentials_model import LoginCredentialsModel
+from dm_api_account.models.registration_model import RegistrationModel
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailhogApi
 import structlog
@@ -12,19 +14,19 @@ structlog.configure(
 def test_post_v1_account():
     mailhog = MailhogApi(host='http://5.63.153.31:5025')
     api = DmApiAccount(host='http://5.63.153.31:5051')
-    login = "naruto_9"
-    email = "naruto_9@mail.ru"
-    password = "naruto_9_11"
-    json = {
-        "login": login,
-        "email": email,
-        "password": password
-    }
-    json_login = {
-        "login": login,
-        "password": password,
-        "rememberMe": True
-    }
+    login = "naruto_14"
+    email = "naruto_14@mail.ru"
+    password = "naruto_14_11"
+    json = RegistrationModel(
+        login=login,
+        email=email,
+        password=password
+    )
+    json_login = LoginCredentialsModel(
+        login=login,
+        password=password,
+        rememberMe=True
+    )
     response = api.account.post_v1_account(json=json)
     assert response.status_code == 201, f'Статус код ответа должен быть 201, но он равен {response.status_code}'
     token = mailhog.get_token_from_last_email()
