@@ -13,9 +13,9 @@ structlog.configure(
 def test_post_v1_account():
     mailhog = MailhogApi(host='http://5.63.153.31:5025')
     api = DmApiAccount(host='http://5.63.153.31:5051')
-    login = "naruto_15"
-    email = "naruto_15@mail.ru"
-    password = "naruto_15_11"
+    login = "naruto_16"
+    email = "naruto_16@mail.ru"
+    password = "naruto_16_11"
     json = Registration(
         login=login,
         email=email,

@@ -1,4 +1,4 @@
-from ..models.login_credentials_model import LoginCredentials
+from ..models import *
 from requests import Response, session
 from restclient.restclient import RestClient
 
