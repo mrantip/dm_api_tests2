@@ -1,7 +1,7 @@
 import time
 
-from dm_api_account.models.change_email_model import ChangeEmailModel
-from dm_api_account.models.registration_model import RegistrationModel
+from dm_api_account.models.change_email_model import ChangeEmail
+from dm_api_account.models.registration_model import Registration
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailhogApi
 import structlog
@@ -20,12 +20,12 @@ def test_put_v1_account_email():
     email = "naruto_13@mail.ru"
     password = "naruto_13_11"
     email_new = "naruto_131@mail.ru"
-    json = RegistrationModel(
+    json = Registration(
         login=login,
         email=email,
         password=password
     )
-    json_new = ChangeEmailModel(
+    json_new = ChangeEmail(
         login=login,
         password=password,
         email=email_new

@@ -1,4 +1,4 @@
-from dm_api_account.models.registration_model import RegistrationModel
+from dm_api_account.models.registration_model import Registration
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailhogApi
 import structlog
@@ -16,7 +16,7 @@ def test_put_v1_account_token():
     login = "naruto_13"
     email = "naruto_13@mail.ru"
     password = "naruto_13_11"
-    json = RegistrationModel(
+    json = Registration(
         login=login,
         email=email,
         password=password

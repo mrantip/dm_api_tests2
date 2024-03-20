@@ -1,5 +1,5 @@
-from dm_api_account.models.login_credentials_model import LoginCredentialsModel
-from dm_api_account.models.registration_model import RegistrationModel
+from dm_api_account.models.login_credentials_model import LoginCredentials
+from dm_api_account.models.registration_model import Registration
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailhogApi
 import structlog
@@ -17,12 +17,12 @@ def test_post_v1_account():
     login = "naruto_14"
     email = "naruto_14@mail.ru"
     password = "naruto_14_11"
-    json = RegistrationModel(
+    json = Registration(
         login=login,
         email=email,
         password=password
     )
-    json_login = LoginCredentialsModel(
+    json_login = LoginCredentials(
         login=login,
         password=password,
         rememberMe=True

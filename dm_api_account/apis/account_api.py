@@ -1,10 +1,10 @@
-from ..models.registration_model import RegistrationModel
-from ..models.reset_password_model import ResetPasswordModel
-from ..models.change_email_model import ChangeEmailModel
-from ..models.change_password_model import ChangePasswordModel
+from ..models.registration_model import Registration
+from ..models.reset_password_model import ResetPassword
+from ..models.change_email_model import ChangeEmail
+from ..models.change_password_model import ChangePassword
 from requests import Response
 from restclient.restclient import RestClient
-from dm_api_account.models.user_envelope_model import UserEnvelopeModel
+from dm_api_account.models.user_envelope_model import UserEnvelope
 
 
 class AccountApi:
@@ -14,7 +14,7 @@ class AccountApi:
         if headers:
             self.client.session.headers.update(headers)
 
-    def post_v1_account(self, json: RegistrationModel, **kwargs) -> Response:
+    def post_v1_account(self, json: Registration, **kwargs) -> Response:
         """
         Register new user
         :param json registration_model
@@ -28,7 +28,7 @@ class AccountApi:
         )
         return response
 
-    def post_v1_account_password(self, json: ResetPasswordModel) -> Response:
+    def post_v1_account_password(self, json: ResetPassword) -> Response:
         """
         Reset registered user password
         :param json reset_password_model
@@ -41,7 +41,7 @@ class AccountApi:
         )
         return response
 
-    def put_v1_account_email(self, json: ChangeEmailModel) -> Response:
+    def put_v1_account_email(self, json: ChangeEmail) -> Response:
         """
         Change registered user email
         :param json change_email_model
@@ -54,7 +54,7 @@ class AccountApi:
         )
         return response
 
-    def put_v1_account_password(self, json: ChangePasswordModel) -> Response:
+    def put_v1_account_password(self, json: ChangePassword) -> Response:
         """
         Change registered user password
         :param json change_password_model
@@ -77,7 +77,7 @@ class AccountApi:
         response = self.client.put(
             path=f"/v1/account/{token}",
         )
-        UserEnvelopeModel(**response.json())
+        UserEnvelope(**response.json())
         return response
 
     def get_v1_account(self) -> Response:

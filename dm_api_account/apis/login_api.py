@@ -1,4 +1,4 @@
-from ..models.login_credentials_model import LoginCredentialsModel
+from ..models.login_credentials_model import LoginCredentials
 from requests import Response, session
 from restclient.restclient import RestClient
 
@@ -11,7 +11,7 @@ class LoginApi:
         if headers:
             self.client.session.headers.update(headers)
 
-    def post_v1_account_login(self, json: LoginCredentialsModel) -> Response:
+    def post_v1_account_login(self, json: LoginCredentials) -> Response:
         """
         Authenticate via credentials
         :param json login_credentials_model
