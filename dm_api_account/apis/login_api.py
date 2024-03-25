@@ -1,6 +1,7 @@
 from ..models import *
-from requests import Response, session
+from requests import Response
 from restclient.restclient import RestClient
+from ..utilities import validate_request_json
 
 
 class LoginApi:
@@ -20,7 +21,7 @@ class LoginApi:
 
         response = self.client.post(
             path=f"/v1/account/login",
-            json=json.model_dump(by_alias=True, exclude_none=True)
+            json=validate_request_json(json)
         )
         return response
 
