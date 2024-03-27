@@ -3,6 +3,8 @@ from dm_api_account.models.registration_model import Registration
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailhogApi
 import structlog
+from hamcrest import assert_that, has_properties
+from dm_api_account.models.user_envelope_model import UserRole
 
 structlog.configure(
     processors=[
@@ -14,9 +16,9 @@ structlog.configure(
 def test_post_v1_account():
     mailhog = MailhogApi(host='http://5.63.153.31:5025')
     api = DmApiAccount(host='http://5.63.153.31:5051')
-    login = "naruto_14"
-    email = "naruto_14@mail.ru"
-    password = "naruto_14_11"
+    login = "naruto_19"
+    email = "naruto_19@mail.ru"
+    password = "naruto_19_11"
     json = Registration(
         login=login,
         email=email,
@@ -28,7 +30,13 @@ def test_post_v1_account():
         rememberMe=True
     )
     response = api.account.post_v1_account(json=json)
-    assert response.status_code == 201, f'Статус код ответа должен быть 201, но он равен {response.status_code}'
     token = mailhog.get_token_from_last_email()
     response = api.account.put_v1_account_token(token=token)
     response = api.login.post_v1_account_login(json=json_login)
+    assert_that(response.resource, has_properties(
+        {
+            'login': login,
+            'roles': [UserRole.guest, UserRole.player],
+            'medium_picture_url': None
+        }
+    ))
