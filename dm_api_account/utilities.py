@@ -9,4 +9,4 @@ def validate_request_json(json: str | BaseModel):
 
 
 def validate_status_code(response: requests.Response, status_code: int):
-    assert response.status_code == status_code, f'Статус код ответа должен быть 201, но он равен {response.status_code}'
+    assert response.status_code == status_code, f'Статус код ответа должен быть {status_code}, но он равен {response.status_code}'

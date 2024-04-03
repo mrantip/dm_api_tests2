@@ -28,7 +28,7 @@ class AccountApi:
         validate_status_code(response, status_code)
         return response
 
-    def post_v1_account_password(self, json: ResetPassword, status_code: int = 201,
+    def post_v1_account_password(self, json: ResetPassword, status_code: int = 200,
                                  **kwargs) -> Response | UserEnvelope:
         """
         Reset registered user password
@@ -43,7 +43,7 @@ class AccountApi:
             **kwargs
         )
         validate_status_code(response, status_code)
-        if response.status_code == 201:
+        if response.status_code == 200:
             return UserEnvelope(**response.json())
         return response
 
@@ -112,6 +112,8 @@ class AccountApi:
             **kwargs
         )
         validate_status_code(response, status_code)
-        if response.status_code == 200:
-            return UserDetailsEnvelope(**response.json())
+        # if response.status_code == 200:
+        #     return UserDetailsEnvelope(**response.json())
         return response
+
+
